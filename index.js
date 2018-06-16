@@ -1,9 +1,7 @@
 
-const cheerio = require('cheerio');
-const axios = require('axios');
 const cron = require('node-cron');
-
 const slack = require('./slack-poster');
+const scraper = require('./star-scraper');
 
 const BEFORE_LUNCH_ON_WEEKDAYS = {
 	hour: 10,
@@ -26,15 +24,9 @@ cron.schedule(cronString, whatsForLunch);
 console.log('Scheduled!');
 
 function whatsForLunch() {
-	const url = 'http://starbowling.se/restaurang/lunch';
-	const selector = '.node-dagens-lunch h2';
-
-	axios.get(url).then((response) => {
-		if (response.status !== 200) {
-			return 'Unable to get lunch page :(';
-		}
-		const html = response.data;
-		const $ = cheerio.load(html);
-		return $(selector).text();
-	}).then(slack.postMessage);
+	scraper.scrape({
+		url: 'http://starbowling.se/restaurang/lunch',
+		selector: '.node-dagens-lunch h2'
+	}).then(slack.postMessage)
+	.catch(slack.postMessage);
 }
