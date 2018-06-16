@@ -15,7 +15,7 @@ const EVERY_MINUTE = {
     daysOfWeek: '*'
 };
 
-postTime = EVERY_MINUTE;
+postTime = BEFORE_LUNCH_ON_WEEKDAYS;
 
 cronString = `0 ${postTime.minute} ${postTime.hour} * * ${postTime.daysOfWeek}`;
 
