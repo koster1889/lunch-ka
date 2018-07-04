@@ -1,4 +1,4 @@
-const webhookUrl = process.env.WEBHOOL_URL;
+const webhookUrl = process.env.WEBHOOK_URL;
 if (!webhookUrl) {
 	console.error('The WEBHOOK_URL env variable needs to be set.')
 	process.exit(1);

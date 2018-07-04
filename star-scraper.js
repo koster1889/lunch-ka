@@ -1,7 +1,14 @@
 const cheerio = require('cheerio');
 const axios = require('axios');
 
-function scrape({url, selector}) {
+function scrape() {
+
+	const params = {
+		url: 'http://starbowling.se/restaurang/lunch',
+		selector: '.node-dagens-lunch tbody'
+	};
+
+	const {url, selector} = params;
 
 	return axios.get(url).then((response) => {
 		if (response.status !== 200) {

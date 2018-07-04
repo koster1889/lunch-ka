@@ -15,7 +15,8 @@ const EVERY_MINUTE = {
     daysOfWeek: '*'
 };
 
-postTime = BEFORE_LUNCH_ON_WEEKDAYS;
+postTime = EVERY_MINUTE;
+//postTime = BEFORE_LUNCH_ON_WEEKDAYS;
 
 cronString = `0 ${postTime.minute} ${postTime.hour} * * ${postTime.daysOfWeek}`;
 
@@ -24,9 +25,6 @@ cron.schedule(cronString, whatsForLunch);
 console.log('Scheduled!');
 
 function whatsForLunch() {
-	scraper.scrape({
-		url: 'http://starbowling.se/restaurang/lunch',
-		selector: '.node-dagens-lunch h2'
-	}).then(slack.postMessage)
+	scraper.scrape().then(slack.postMessage)
 	.catch(slack.postMessage);
 }
